@@ -1,5 +1,18 @@
 #include"libs.h"
 
+Vertex vertices[] = {
+	//position						//color							//Texcoords
+	glm::vec3(0.0f,0.5f,0.f),		glm::vec3(1.f,0.f,0.f),			glm::vec2(0.f,1.f),
+	glm::vec3(-0.5f,-0.5f,0.f),		glm::vec3(0.f,1.f,0.f),			glm::vec2(0.f,0.f),
+	glm::vec3(0.5f,-0.5f,0.f),		glm::vec3(0.f,0.f,1.f),			glm::vec2(1.f,0.f)
+};
+unsigned nrOFVertices = sizeof(vertices) / sizeof(Vertex); // does not work on pointers
+
+GLuint indices[] = {
+	0, 1, 2
+};
+unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint); // does not work on pointers
+
 void framebuffer_resize_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
@@ -145,6 +158,39 @@ int main() {
 		glfwTerminate();
 	}
 
+	//MODEL
+
+	//VAO
+	GLuint VAO;
+	glCreateVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	//VBO
+	GLuint VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER,VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //use dynamic_draw if you want to change it often
+	//EBO
+	GLuint EBO;
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	//INPUT ASSEMBLY
+	//GLuint attribloc = glGetAttribLocation(core_program, "vertex_position");
+	//Poaition
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),(GLvoid*)offsetof(Vertex,position));
+	glEnableVertexAttribArray(0);
+	//Color
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, color));
+	glEnableVertexAttribArray(1);
+	//Texcoord
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texcoord));
+	glEnableVertexAttribArray(2);
+
+	//unbind
+	glBindVertexArray(0);
+
+
 
 
 	//MAIN LOOP
@@ -158,7 +204,15 @@ int main() {
 		//CLEAR
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+
+		//Use a program
+		glUseProgram(core_program);
+
+		//bind vertex array
+		glBindVertexArray(VAO);
+
 		//DRAW
+		glDrawElements(GL_TRIANGLES, nrOfIndices, GL_UNSIGNED_INT, 0);
 		//END DRAW
 		glfwSwapBuffers(window);
 		glFlush();
