@@ -1,5 +1,7 @@
 #pragma once
 #include<iostream>
+#include <fstream>
+#include <string>
 #include<glew.h> //before glfw3 !!
 #include<glfw3.h>
 #include<vec2.hpp>

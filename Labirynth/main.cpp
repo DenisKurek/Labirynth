@@ -4,6 +4,89 @@ void framebuffer_resize_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
+bool loadShaders(GLuint &program) {
+	bool load_success = true;
+	char infolog[512];
+	GLint success;
+
+	std::string temp = "";
+	std::string src = "";
+	std::ifstream in_file;
+	//vertex
+	in_file.open("vertex_core.glsl");
+	if (in_file.is_open()) {
+		while (std::getline(in_file, temp)) {
+			src += temp + '\n';
+		}
+	}
+	else {
+		load_success = false;
+		std::cout << "ERROR::LODSHADERS::COULD_NOT_OPEN_VERTEX_FILE" << '\n';
+	}
+	in_file.close();
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	const GLchar* vertSrc = src.c_str();
+	glShaderSource(vertexShader, 1, &vertSrc, NULL);
+	glCompileShader(vertexShader);
+
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		load_success = false;
+		glGetShaderInfoLog(vertexShader, 512, NULL, infolog);
+		std::cout << "ERROR::LODSHADERS::COULD_NOT_COMPILE_VERTEX_SHADER" << '\n';
+		std::cout << infolog << '\n';
+	}
+	temp = "";
+	src = "";
+
+	//Fragment
+	in_file.open("fragment_core.glsl");
+	if (in_file.is_open()) {
+		while (std::getline(in_file, temp)) {
+			src += temp + '\n';
+		}
+	}
+	else {
+		load_success = false;
+		std::cout << "ERROR::LODSHADERS::COULD_NOT_OPEN_FRAGMENT_FILE" << '\n';
+	}
+	in_file.close();
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	const GLchar* fragSrc = src.c_str();
+	glShaderSource(fragmentShader, 1, &fragSrc, NULL);
+	glCompileShader(fragmentShader);
+
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infolog);
+		load_success = false;
+		std::cout << "ERROR::LODSHADERS::COULD_NOT_COMPILE_FRAGMENT_SHADER" << '\n';
+		std::cout << infolog << '\n';
+	}
+	//Program
+	program = glCreateProgram();
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, fragmentShader);
+
+	glLinkProgram(program);
+
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(program, 512, NULL, infolog);
+		load_success = false;
+		std::cout << "ERROR::LODSHADERS::COULD_NOT_LINK_PROGRAM" << '\n';
+		std::cout << infolog << '\n';
+	}
+
+	//End
+	glUseProgram(0);
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	return load_success;
+
+}
+
 int main() {
 	//INIT GLFW
 	glfwInit();
@@ -34,8 +117,17 @@ int main() {
 	glewExperimental = GL_TRUE; //enable modern openGL
 	if (glewInit() != GLEW_OK) {
 		std::cout << " NOT OK !! \n";
-		//glfwTerminate();
+		glfwTerminate();
 	}
+	//SHADER INIT
+
+	GLuint core_program;
+	if (!loadShaders(core_program)) {
+		glfwTerminate;
+	}
+
+
+
 	//MAIN LOOP
 	while (!glfwWindowShouldClose(window)) {
 		//UPDATE INPUT
@@ -53,14 +145,10 @@ int main() {
 	}
 
 	//END OF PROGRAM
+	glfwDestroyWindow(window);
 	glfwTerminate();
 
-	if (glewInit != GLEW_OK) {
-		std::cout << " NOT OK !! \n";
-	}
-	else {
-		std::cout << "its ok";
-	}
-	system("Pause");
+	//Delete program
+	glDeleteProgram(core_program);
 	return 0;
 }
