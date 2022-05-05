@@ -4,6 +4,12 @@ void framebuffer_resize_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
+void updateInput(GLFWwindow* window){
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+}
+
 bool loadShaders(GLuint &program) {
 	bool load_success = true;
 	char infolog[512];
@@ -116,14 +122,27 @@ int main() {
 	//INIT GLEW (needs window)
 	glewExperimental = GL_TRUE; //enable modern openGL
 	if (glewInit() != GLEW_OK) {
-		std::cout << " NOT OK !! \n";
+		std::cout << "ERROR::MAIN>CPP::GLEW_INIT_FAILED" << '\n';
 		glfwTerminate();
 	}
+
+	//OPENGL OPTIONS
+	glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
 	//SHADER INIT
 
 	GLuint core_program;
 	if (!loadShaders(core_program)) {
-		glfwTerminate;
+		glfwTerminate();
 	}
 
 
@@ -134,6 +153,7 @@ int main() {
 		glfwPollEvents();
 
 		//UPDATE
+		updateInput(window);
 		//DRAW
 		//CLEAR
 		glClearColor(0.f, 0.f, 0.f, 1.f);
