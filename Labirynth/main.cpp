@@ -1,11 +1,11 @@
 #include"libs.h"
 
 Vertex vertices[] = {
-	//position						//color							//Texcoords
-	glm::vec3(-0.5f,0.5f,0.f),		glm::vec3(1.f,0.f,0.f),			glm::vec2(0.f,1.f),
-	glm::vec3(-0.5f,-0.5f,0.f),		glm::vec3(0.f,1.f,0.f),			glm::vec2(0.f,0.f),
-	glm::vec3(0.5f,-0.5f,0.f),		glm::vec3(0.f,0.f,1.f),			glm::vec2(1.f,0.f),
-	glm::vec3(0.5f,0.5f,0.f),		glm::vec3(0.f,1.f,0.f),			glm::vec2(1.f,1.f)
+	//position						//color							//Texcoords				//Normals
+	glm::vec3(-0.5f,0.5f,0.f),		glm::vec3(1.f,0.f,0.f),			glm::vec2(0.f,1.f),		glm::vec3(0.f,0.f,-1.f),
+	glm::vec3(-0.5f,-0.5f,0.f),		glm::vec3(0.f,1.f,0.f),			glm::vec2(0.f,0.f),		glm::vec3(0.f,0.f,-1.f),
+	glm::vec3(0.5f,-0.5f,0.f),		glm::vec3(0.f,0.f,1.f),			glm::vec2(1.f,0.f),		glm::vec3(0.f,0.f,-1.f),
+	glm::vec3(0.5f,0.5f,0.f),		glm::vec3(0.f,1.f,0.f),			glm::vec2(1.f,1.f),		glm::vec3(0.f,0.f,-1.f)
 };
 unsigned nrOFVertices = sizeof(vertices) / sizeof(Vertex); // does not work on pointers
 
@@ -216,6 +216,9 @@ int main() {
 	//Texcoord
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texcoord));
 	glEnableVertexAttribArray(2);
+	//Normal
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, normal));
+	glEnableVertexAttribArray(3);
 
 	//unbind
 	glBindVertexArray(0);
@@ -274,12 +277,18 @@ int main() {
 		nearPlane,
 		farPlane
 	);
+
+	//LIGHTS
+	glm::vec3 lightPos0(0.f, 0.f, 2.f);
+
 	//INIT UNIFORMS
 	glUseProgram(core_program);
 
 	glUniformMatrix4fv(glGetUniformLocation(core_program,"ModelMatrix"),1,GL_FALSE,glm::value_ptr(ModelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(core_program,"ViewMatrix"),1,GL_FALSE,glm::value_ptr(ViewMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(core_program,"ProjectionMatrix"),1,GL_FALSE,glm::value_ptr(ProjectionMatrix));
+
+	glUniform3fv(glGetUniformLocation(core_program, "lightPos0"), 1, glm::value_ptr(lightPos0));
 
 	glUseProgram(0);
 	//MAIN LOOP
