@@ -11,6 +11,7 @@ unsigned nrOFVertices = sizeof(vertices) / sizeof(Vertex); // does not work on p
 
 GLuint indices[] = {
 	0, 1, 2,
+	0, 2, 3
 };
 unsigned nrOfIndices = sizeof(indices) / sizeof(GLuint); // does not work on pointers
 
@@ -216,8 +217,19 @@ int main() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	SOIL_free_image_data(image); //remove data (important)!!
 
+	//works right to left
+	glm::mat4 ModelMatrix(1.f);
+	ModelMatrix = glm::translate(ModelMatrix,glm::vec3(0.f,0.f,0.f));
+	ModelMatrix = glm::rotate(ModelMatrix,glm::radians(0.f),glm::vec3(1.f,0.f,0.f));
+	ModelMatrix = glm::rotate(ModelMatrix,glm::radians(0.f),glm::vec3(0.f,1.f,0.f));
+	ModelMatrix = glm::rotate(ModelMatrix,glm::radians(0.f),glm::vec3(0.f,0.f,1.f));
+	ModelMatrix = glm::scale(ModelMatrix,glm::vec3(1.f));
 
+	glUseProgram(core_program);
 
+	glUniformMatrix4fv(glGetUniformLocation(core_program,"ModelMatrix"),1,GL_FALSE,glm::value_ptr(ModelMatrix));
+
+	glUseProgram(0);
 	//MAIN LOOP
 	while (!glfwWindowShouldClose(window)) {
 		//UPDATE INPUT
@@ -235,6 +247,16 @@ int main() {
 
 		//Update uniform
 		glUniform1i(glGetUniformLocation(core_program, "texture0"), 0);
+
+		//move rotate and scale
+
+		ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.1f, 0.f, 0.f));
+		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.f), glm::vec3(1.f, 0.f, 0.f));
+		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.f), glm::vec3(0.f, 1.f, 0.f));
+		ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.f), glm::vec3(0.f, 0.f, 1.f));
+		ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.f));
+
+		glUniformMatrix4fv(glGetUniformLocation(core_program, "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
 
 		//Activate texture
 		glActiveTexture(GL_TEXTURE0);
