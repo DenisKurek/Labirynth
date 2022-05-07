@@ -10,7 +10,7 @@ out vec4 fs_color;
 uniform sampler2D texture0;
 
 uniform vec3 lightPos0;
-uniform vec3 cameraPos;
+uniform vec3 camPosition;
 void main() {
 	//fs_color = vec4(vs_color, 1.f);
 
@@ -26,7 +26,7 @@ void main() {
 	//Specular light
 	vec3 lightToPosDirVec = normalize(lightPos0 - vs_position);
 	vec3 reflectDirVec = normalize(reflect(lightToPosDirVec, normalize(vs_normal)));
-	vec3 posToViewDirVec = normalize(vs_position - cameraPos);
+	vec3 posToViewDirVec = normalize(vs_position - camPosition);
 	float specularConstant = pow(max(dot(posToViewDirVec, reflectDirVec), 0), 30);
 	vec3 specularFinal = vec3(1.f, 1.f, 1.f) * specularConstant;
 
