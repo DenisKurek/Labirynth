@@ -103,7 +103,9 @@ int main() {
 	Shader core_program("vertex_core.glsl", "fragment_core.glsl");
 
 	//MODEL
-	Mesh test(vertices, nrOFVertices, indices, nrOfIndices);
+	Primitive* tmp = new Triangle();
+	Mesh mesh(tmp);
+	delete tmp;
 
 	//TEXTURE INIT
 
@@ -149,7 +151,7 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		//UPDATE INPUT
 		glfwPollEvents();
-		updateInput(window, test);
+		updateInput(window, mesh);
 
 		//UPDATE
 		updateInput(window);
@@ -180,7 +182,7 @@ int main() {
 		texture1.bind();
 
 		//Draw
-		test.render(&core_program);
+		mesh.render(&core_program);
 
 		//END DRAW
 		glfwSwapBuffers(window);
