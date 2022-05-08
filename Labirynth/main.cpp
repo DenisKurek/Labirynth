@@ -137,8 +137,13 @@ int main() {
 	//unbind
 	glBindVertexArray(0);
 
+	//TEXTURE INIT
+
 	Texture texture0("images/smiley_face.png", GL_TEXTURE_2D,0);
 	Texture texture1("images/container.png", GL_TEXTURE_2D,1);
+
+	//MATERIAL 0
+	Material material0(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f), texture0.getTextureUnit(), texture1.getTextureUnit());
 
 	//INIT MATRICIES works right to left
 	glm::vec3 position(0.f);
@@ -194,10 +199,7 @@ int main() {
 		glClearColor(0.f, 0.f, 0.f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
-
-		//Update uniform
-		core_program.set1i(texture0.getTextureUnit(), "texture0");
-		core_program.set1i(texture1.getTextureUnit(), "texture1");
+		material0.sendToShader(core_program);
 
 		//move rotate and scale
 		ModelMatrix = glm::mat4(1.f);
