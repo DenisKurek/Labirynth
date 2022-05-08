@@ -25,6 +25,7 @@ void updateInput(GLFWwindow* window){
 	}
 }
 
+
 void updateInput(GLFWwindow* window, glm::vec3& position, glm::vec3& rotation, glm::vec3& scale) {
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 		position.z -= 0.01f;
@@ -120,7 +121,7 @@ int main() {
 
 	//INPUT ASSEMBLY
 	//GLuint attribloc = glGetAttribLocation(core_program, "vertex_position");
-	//Poaition
+	//Position
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),(GLvoid*)offsetof(Vertex,position));
 	glEnableVertexAttribArray(0);
 	//Color
@@ -136,30 +137,8 @@ int main() {
 	//unbind
 	glBindVertexArray(0);
 
-	//TEXTURE INIT
-	int image_width = 0;
-	int image_height = 0;
-	unsigned char* image = SOIL_load_image("images/2.png",&image_width,&image_height,NULL,SOIL_LOAD_RGBA);
-
-	GLuint texture0;
-	glGenTextures(1, &texture0);
-	glBindTexture(GL_TEXTURE_2D, texture0);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	if (image) {
-		glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,image_width,image_height,0,GL_RGBA,GL_UNSIGNED_BYTE,image);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else {
-		std::cout << "ERROR::TEXTURE_LOADING_FAILED" << "\n";
-	}
-	glActiveTexture(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	SOIL_free_image_data(image); //remove data (important)!!
+	Texture texture0("images/smiley_face.png", GL_TEXTURE_2D,0);
+	Texture texture1("images/container.png", GL_TEXTURE_2D,1);
 
 	//INIT MATRICIES works right to left
 	glm::vec3 position(0.f);
@@ -217,7 +196,8 @@ int main() {
 
 
 		//Update uniform
-		core_program.set1i(0, "texture0");
+		core_program.set1i(texture0.getTextureUnit(), "texture0");
+		core_program.set1i(texture1.getTextureUnit(), "texture1");
 
 		//move rotate and scale
 		ModelMatrix = glm::mat4(1.f);
@@ -244,9 +224,8 @@ int main() {
 		core_program.use();
 
 		//Activate texture
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture0);
-
+		texture0.bind();
+		texture1.bind();
 		//bind vertex array
 		glBindVertexArray(VAO);
 
@@ -258,8 +237,8 @@ int main() {
 
 		glBindVertexArray(0);
 		glUseProgram(0);
-		glActiveTexture(0);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		texture0.unbind();
+		texture0.unbind();
 	}
 
 	//END OF PROGRAM
