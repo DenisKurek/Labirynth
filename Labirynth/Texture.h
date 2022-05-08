@@ -10,14 +10,13 @@
 class Texture {
 
 public:
-	Texture(const char* fileName, GLenum type, GLint texture_unit) {
+	Texture(const char* fileName, GLenum type) {
 
 		if (this->id) {
 			glDeleteTextures(1, &this->id);
 		}
 
 		this->type = type;
-		this->textureUnit = texture_unit;
 		unsigned char* image = SOIL_load_image(fileName, &this->width, &this->height, NULL, SOIL_LOAD_RGBA);
 
 		glGenTextures(1, &this->id);
@@ -48,8 +47,6 @@ public:
 		return this->id;
 	}
 
-	inline GLint getTextureUnit() const { return this->textureUnit; }
-
 	void loadFromFile(const char* fileName) {
 		if (this->id) {
 			glDeleteTextures(1, &this->id);
@@ -77,9 +74,9 @@ public:
 		SOIL_free_image_data(image);
 	}
 
-	void bind() {
+	void bind(const GLint texture_unit) {
 
-		glActiveTexture(GL_TEXTURE0 + this->textureUnit);
+		glActiveTexture(GL_TEXTURE0 + texture_unit);
 		glBindTexture(this->type, this->id);
 	}
 
@@ -88,13 +85,10 @@ public:
 		glBindTexture(this->type, 0);
 	}
 
-
-
 private:
 	GLuint id;
 	int width;
 	int height;
 	unsigned int type;
-	GLint textureUnit;
 
 };
