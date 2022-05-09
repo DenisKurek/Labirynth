@@ -42,7 +42,9 @@ public:
 	~Mesh() {
 		glDeleteVertexArrays(1, &this->VAO);
 		glDeleteBuffers(1, &this->VBO);
-		glDeleteBuffers(1, &this->EBO);
+		if (this->nrOfIndices > 0) {
+			glDeleteBuffers(1, &this->EBO);
+		}
 	}
 
 	//Accessors
@@ -72,9 +74,6 @@ public:
 		this->scale += scale;
 	}
 
-	void update() {
-
-	}
 
 	void render(Shader* shader) {
 		//update uniforms
@@ -87,8 +86,12 @@ public:
 		glBindVertexArray(this->VAO);
 
 		//RENDER
-		glDrawElements(GL_TRIANGLES, this->nrOfIndices, GL_UNSIGNED_INT, 0);
-		
+		if (this->nrOfIndices == 0) {
+			glDrawArrays(GL_TRIANGLES, 0, this->nrOfVertices);
+		}
+		else {
+			glDrawElements(GL_TRIANGLES, this->nrOfIndices, GL_UNSIGNED_INT, 0);
+		}	
 	}
 private:
 	unsigned nrOfVertices;
@@ -121,9 +124,11 @@ private:
 		glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 		glBufferData(GL_ARRAY_BUFFER,this->nrOfVertices * sizeof(Vertex), vertexArray, GL_STATIC_DRAW); //use dynamic_draw if you want to change it often
 		//EBO
-		glGenBuffers(1, &this->EBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER,this->nrOfIndices * sizeof(GLuint), indexArray, GL_STATIC_DRAW);
+		if (this->nrOfIndices > 0) {
+			glGenBuffers(1, &this->EBO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->nrOfIndices * sizeof(GLuint), indexArray, GL_STATIC_DRAW);
+		}
 
 		//INPUT ASSEMBLY
 		//GLuint attribloc = glGetAttribLocation(core_program, "vertex_position");

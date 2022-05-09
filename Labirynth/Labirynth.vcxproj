@@ -153,6 +153,7 @@
     <ClInclude Include="libs.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Shader.h" />

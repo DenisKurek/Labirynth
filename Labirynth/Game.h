@@ -3,13 +3,15 @@
 #include "libs.h"
 
 enum shader_enum {SHADER_CORE_PROGRAM =0};
-enum texture_enum {TEX_FACE = 0,TEX_CONTAINER = 1 };
+enum texture_enum {TEX_FACE = 0, TEX_FACE_SPECULAR,
+	TEX_CONTAINER, TEX_CONTAINER_SPECULAR};
 enum material_enum {MAT_1 = 0};
 enum mesh_enum {MESH_QUAD = 0};
 
 class Game {
 public:
 	//Variables
+	Camera camera;
 		//Window
 	GLFWwindow* window;
 	const int WINDOW_WIDTH;
@@ -64,23 +66,34 @@ public:
 	void setWindowShouldclose();
 
 	//Functions
+
 	void update();
+	void updateDt();
+	void updateMouseinput();
+	void updateKeyboardInput();
+	void updateInput();
 	void render();
 
 	static void framebuffer_resize_callback(GLFWwindow* window, int width, int height) {
 		glViewport(0, 0, width, height);
 	}
 
-	static void updateInput(GLFWwindow* window) {
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-			glfwSetWindowShouldClose(window, GLFW_TRUE);
-		}
-	}
-
-	static void updateInput(GLFWwindow* window, Mesh& mesh);
-
 private:
 	//Variables
+	// 
+	//Delta time
+	float dt;
+	float curTime;
+	float lastTime;
+
+	//Mouse Input
+	double lastMouseX;
+	double lastMouseY;
+	double mouseX;
+	double mouseY;
+	double mouseOffsetX;
+	double mouseOffsetY;
+	bool firstMouse;
 
 	//Static Variables
 
