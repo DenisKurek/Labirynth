@@ -45,8 +45,11 @@ public:
 	//Meshes
 	std::vector<Mesh*> meshes;
 
+	//Models
+	std::vector<Model*> models;
+
 	//Lights
-	std::vector<glm::vec3*>lights;
+	std::vector<PointLight*> pointLights;
 
 
 
@@ -107,6 +110,8 @@ private:
 	void initTextures();
 	void initMaterials();
 	void initMeshes();
+	void initModels();
+	void initPointLights();
 	void initLights();
 	void initUniforms();
 

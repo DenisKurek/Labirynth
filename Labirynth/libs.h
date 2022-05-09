@@ -18,4 +18,5 @@
 #include<SOIL2.h>
 #include "Mesh.h"
 #include "Camera.h"
-
+#include "Model.h"
+#include "Light.h"
