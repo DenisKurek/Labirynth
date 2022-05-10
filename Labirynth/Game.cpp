@@ -224,7 +224,7 @@ void Game::initOpenGLOptions(){
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
+	glFrontFace(GL_CW);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -268,11 +268,74 @@ void Game::initMaterials(){
 	this->materials.push_back( new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f),0, 1));
 }
 
+GLuint walls[5][6] =
+{
+	//right
+	{0, 1, 2,0, 2, 3},
+	
+	//back
+	{7, 6, 1,7, 1, 0},
+
+	//left
+	{4, 5, 6,4, 6, 7},
+
+	//up
+	{3, 2, 5,3, 5, 4},
+
+	{1, 6, 5,1, 5, 2}
+};
+
+Vertex wallVertices[] = {
+	//Position								//Color							//Texcoords					//Normals
+	glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+
+	glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+	glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f)
+};
+unsigned nrOfWallVertices = sizeof(wallVertices) / sizeof(Vertex);
+
 void Game::initMeshes(){
-	Primitive* tmp = new Quad();
-	this->meshes.push_back(new Mesh(tmp,glm::vec3(0.f), glm::vec3(0.f), glm::vec3(0.f), glm::vec3(1.f)));
-	this->meshes.push_back(new Mesh(tmp, glm::vec3(0.f,0.f,-2.f), glm::vec3(0.f), glm::vec3(90.f), glm::vec3(1.f)));
-	delete tmp;
+
+	constexpr int ROOM_SIZE = 8.f;
+
+	MazeGenerator maze = MazeGenerator();
+
+	for(int i=0;i<10;i++){
+		for (int j = 0; j < 10; j++) {
+			std::vector<GLuint>indices;
+			for (int point = 0; point < 6; point++) {
+				if (maze.getWall(i, j, 'L')) {
+					indices.push_back(walls[2][point]);
+				}
+			}
+			for (int point = 0; point < 6; point++) {
+				if (maze.getWall(i, j, 'R')) {
+					indices.push_back(walls[0][point]);
+				}
+			}
+			for (int point = 0; point < 6; point++) {
+				if (maze.getWall(i, j, 'U')) {
+					indices.push_back(walls[3][point]);
+				}
+			}
+			for (int point = 0; point < 6; point++) {
+				if (maze.getWall(i, j, 'D')) {
+					indices.push_back(walls[1][point]);
+				}
+			}
+			for (int point = 0; point < 6; point++) {
+				indices.push_back(walls[4][point]);
+			}
+			
+			this->meshes.push_back(new Mesh(wallVertices,nrOfWallVertices,indices.data(),indices.size(),
+				glm::vec3(-i*ROOM_SIZE,0,j*ROOM_SIZE),glm::vec3(0), glm::vec3(0), glm::vec3(ROOM_SIZE)));
+		}
+	}
 }
 
 void Game::initModels(){
@@ -335,5 +398,3 @@ void Game::updateUniforms(){
 	this->shaders[SHADER_CORE_PROGRAM]->setMat4fv(this->ProjectionMatrix, "ProjectionMatrix");
 
 }
-
-

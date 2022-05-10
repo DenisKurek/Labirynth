@@ -153,6 +153,7 @@
     <ClInclude Include="libs.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Model.h" />

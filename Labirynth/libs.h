@@ -20,3 +20,6 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Light.h"
+#include <time.h>
+#include <windows.h> 
+#include "MazeGenerator.h"

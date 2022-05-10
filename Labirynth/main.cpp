@@ -1,6 +1,7 @@
 #include "Game.h"
 
 int main() {
+	srand(time(nullptr));
 	Game game("LABIRYNTH", 640 , 480 , true);
 	//MAIN LOOP
 	while (!game.getWindowShouldClose()) {

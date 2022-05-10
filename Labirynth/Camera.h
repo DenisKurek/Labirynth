@@ -32,7 +32,7 @@ private:
 	void updateCameraVectors()
 	{
 		this->front.x = cos(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
-		this->front.y = sin(glm::radians(this->pitch));
+		//this->front.y = sin(glm::radians(this->pitch));
 		this->front.z = sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
 
 		this->front = glm::normalize(this->front);
@@ -45,7 +45,7 @@ public:
 	{
 		this->ViewMatrix = glm::mat4(1.f);
 
-		this->movementSpeed = 3.f;
+		this->movementSpeed = 10.f;
 		this->sensitivity = 5.f;
 
 		this->worldUp = worldUp;
