@@ -18,9 +18,64 @@ void Game::setWindowShouldclose(){
 	//Functions
 void Game::update() {
 	//UPDATE INPUT
+	std::cout << this->camera.getPosition().x << " " << this->camera.getPosition().z << std::endl;
+	//this->meshes[1]->showPosition();
+	this->collisionDetector();
 	this->updateDt();
 	this->updateInput();
 }
+
+void Game::collisionDetector() {
+	float x = this->camera.getPosition().x;
+	float z = this->camera.getPosition().z;
+	int maze_size = 10;
+	int i = (-4 + this->camera.getPosition().x )/ -8;
+	int j = ( 4 + this->camera.getPosition().z )/  8;
+			int block = i * maze_size + j;
+			bool exR = this->maze.getWall(i, j, 'R'); // U R L D
+			bool exL = this->maze.getWall(i, j, 'L'); // U R L D
+			bool exU = this->maze.getWall(i, j, 'U'); // U R L D
+			bool exD = this->maze.getWall(i, j, 'D'); // U R L D
+			std::cout << i << "  " << j << std::endl;
+			if ((z + 0.2) >= (meshes[block]->Position().z + 3.85)
+				&& (z + 0.2) <= (meshes[block]->Position().z + 4.15)
+				&& (x + 0.2) <= (meshes[block]->Position().x + 3.9)
+				&& (x + 0.2) >= (meshes[block]->Position().x - 3.9)
+				&& exR
+				) {
+				std::cout << "kolizja R" << exR << std::endl;
+				this->kolizja = 1;
+			}
+			else if ((z - 0.2) <= (meshes[block]->Position().z - 3.85)
+				&& (z - 0.2) >= (meshes[block]->Position().z - 4.15)
+				&& (x + 0.2) <= (meshes[block]->Position().x + 3.9)
+				&& (x + 0.2) >= (meshes[block]->Position().x - 3.9)
+				&& exL
+				) {
+				std::cout << "kolizja L" << exL << std::endl;
+				this->kolizja = 1;
+			}
+			else if ((x + 0.2) >= (meshes[block]->Position().x + 3.85)
+				&& (x + 0.2) <= (meshes[block]->Position().x + 4.15)
+				&& (z + 0.2) <= (meshes[block]->Position().z + 3.9)
+				&& (z + 0.2) >= (meshes[block]->Position().z - 3.9)
+				&& exU
+				) {
+				std::cout << "kolizja U" << exU << std::endl;
+				this->kolizja = 1;
+			}
+			else if ((x - 0.2) <= (meshes[block]->Position().x - 3.85)
+				&& (x - 0.2) >= (meshes[block]->Position().x - 4.15)
+				&& (z + 0.2) <= (meshes[block]->Position().z + 3.9)
+				&& (z + 0.2) >= (meshes[block]->Position().z - 3.9)
+				&& exD
+				) {
+				std::cout << "kolizja B" << exD << std::endl;
+				this->kolizja = 1;
+			}
+			else this->kolizja = 0;
+}
+
 
 void Game::updateDt(){
 	this->curTime = static_cast<float>(glfwGetTime());
@@ -58,7 +113,7 @@ void Game::updateKeyboardInput(){
 	}
 
 	//Camera
-	if (glfwGetKey(this->window, GLFW_KEY_W) == GLFW_PRESS)
+	if (glfwGetKey(this->window, GLFW_KEY_W) == GLFW_PRESS && this->kolizja == 0)
 	{
 		this->camera.move(this->dt, FORWARD);
 	}
@@ -74,15 +129,14 @@ void Game::updateKeyboardInput(){
 	{
 		this->camera.move(this->dt, RIGHT);
 	}
-	if (glfwGetKey(this->window, GLFW_KEY_C) == GLFW_PRESS)
+	if (glfwGetKey(this->window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
-		this->camPosition.y -= 0.05f;
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
-	if (glfwGetKey(this->window, GLFW_KEY_SPACE) == GLFW_PRESS)
-	{
-		this->camPosition.y += 0.05f;
+	else if (glfwGetKey(this->window, GLFW_KEY_Q) == GLFW_RELEASE) {
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
-
+	
 }
 
 void Game::updateInput(){
@@ -124,7 +178,7 @@ Game::Game(
 	const int width, const int height,
 	bool resizable
 ) : WINDOW_WIDTH(width), WINDOW_HEIGHT(height),
-	camera(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 1.f, 0.f)) {
+	camera(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 1.f, 0.f)) {
 	//Init variables
 	this->window = nullptr;
 	this->framebufferWidth = width;
@@ -271,18 +325,18 @@ void Game::initMaterials(){
 GLuint walls[5][6] =
 {
 	//right
-	{0, 1, 2,0, 2, 3},
+	{0, 1, 2, 0, 2, 3},
 	
 	//back
-	{7, 6, 1,7, 1, 0},
+	{7, 6, 1, 7, 1, 0},
 
 	//left
-	{4, 5, 6,4, 6, 7},
+	{4, 5, 6, 4, 6, 7},
 
 	//up
-	{3, 2, 5,3, 5, 4},
+	{3, 2, 5, 3, 5, 4},
 
-	{1, 6, 5,1, 5, 2}
+	{1, 6, 5, 1, 5, 2}
 };
 
 Vertex wallVertices[] = {
@@ -302,8 +356,6 @@ unsigned nrOfWallVertices = sizeof(wallVertices) / sizeof(Vertex);
 void Game::initMeshes(){
 
 	constexpr int ROOM_SIZE = 8.f;
-
-	MazeGenerator maze = MazeGenerator();
 
 	for(int i=0;i<10;i++){
 		for (int j = 0; j < 10; j++) {

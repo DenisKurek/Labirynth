@@ -189,6 +189,14 @@ public:
 	//Accessors
 
 	//Modifiers
+	void showPosition(){
+		std::cout << this->position.x << " " << this->position.y << " " << this->position.z << " " << std::endl;
+	}
+
+	const glm::vec3 Position() {
+		return this->position;
+	}
+
 	void setPosition(const glm::vec3 position)
 	{
 		this->position = position;

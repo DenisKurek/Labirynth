@@ -2,7 +2,7 @@
 
 int main() {
 	srand(time(nullptr));
-	Game game("LABIRYNTH", 640 , 480 , true);
+	Game game("LABIRYNTH", 1600 , 800 , true);
 	//MAIN LOOP
 	while (!game.getWindowShouldClose()) {
 		//UPDATE INPUT

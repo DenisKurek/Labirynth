@@ -37,7 +37,7 @@ public:
 		: Light(intensity, color)
 	{
 		this->position = position;
-		this->constant = constant;
+		this->constant =  25; // constant;
 		this->linear = linear;
 		this->quadratic = quadratic;
 	}
