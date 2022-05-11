@@ -69,7 +69,9 @@ public:
 	void setWindowShouldclose();
 
 	//Functions
-
+	MazeGenerator maze = MazeGenerator();
+	int kolizja = 0;
+	void collisionDetector();																																	//collision
 	void update();
 	void updateDt();
 	void updateMouseinput();
