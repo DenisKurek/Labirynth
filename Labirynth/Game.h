@@ -12,7 +12,8 @@ class Game {
 public:
 	//Variables
 	Camera camera;
-		//Window
+	
+	//Window informations
 	GLFWwindow* window;
 	const int WINDOW_WIDTH;
 	const int WINDOW_HEIGHT;
@@ -70,7 +71,6 @@ public:
 
 	//Functions
 	MazeGenerator maze = MazeGenerator();
-	int kolizja = 0;
 	void collisionDetector();																																	//collision
 	void update();
 	void updateDt();
