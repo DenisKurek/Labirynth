@@ -18,7 +18,7 @@ void Game::setWindowShouldclose(){
 	//Functions
 void Game::update() {
 	//UPDATE INPUT
-	std::cout << this->camera.getPosition().x << " " << this->camera.getPosition().z << std::endl;
+	//std::cout << this->camera.getPosition().x << " " << this->camera.getPosition().z << std::endl;
 	//this->meshes[1]->showPosition();
 	this->collisionDetector();
 	this->updateDt();
@@ -28,7 +28,7 @@ void Game::update() {
 void Game::collisionDetector() {
 	float x = this->camera.getPosition().x;
 	float z = this->camera.getPosition().z;
-	int maze_size = 10;
+	int maze_size = maze.getSize();
 	int i = (-4 + this->camera.getPosition().x )/ -8;
 	int j = ( 4 + this->camera.getPosition().z )/  8;
 			int block = i * maze_size + j;
@@ -42,7 +42,7 @@ void Game::collisionDetector() {
 				&& exR
 				) {
 				camera.setPosition(glm::vec3(this->camera.getPosition().x, 0, meshes[block]->Position().z + 3.5f));
-				std::cout << "kolizja R" << exR << std::endl;
+				//std::cout << "kolizja R" << exR << std::endl;
 				//this->kolizja = 1;
 
 			}
@@ -51,7 +51,7 @@ void Game::collisionDetector() {
 				&& exL
 				) {
 				camera.setPosition(glm::vec3(this->camera.getPosition().x, 0, meshes[block]->Position().z - 3.5f));
-				std::cout << "kolizja L" << exL << std::endl;
+				//std::cout << "kolizja L" << exL << std::endl;
 				//this->kolizja = 1;
 			}
 			if ((x ) > (meshes[block]->Position().x + 3.5)
@@ -59,7 +59,7 @@ void Game::collisionDetector() {
 				&& exU
 				) {
 				camera.setPosition(glm::vec3(meshes[block]->Position().x + 3.5f, 0, this->camera.getPosition().z));
-				std::cout << "kolizja U" << exU << std::endl;
+				//std::cout << "kolizja U" << exU << std::endl;
 				//this->kolizja = 1;
 			}
 			if ((x ) < (meshes[block]->Position().x - 3.5)
@@ -67,7 +67,7 @@ void Game::collisionDetector() {
 				&& exD
 				) {
 				camera.setPosition(glm::vec3(meshes[block]->Position().x - 3.5f, 0, this->camera.getPosition().z));
-				std::cout << "kolizja B" << exD << std::endl;
+				//std::cout << "kolizja B" << exD << std::endl;
 				//this->kolizja = 1;
 			}
 			//prawy górny
@@ -86,7 +86,6 @@ void Game::collisionDetector() {
 			if (x < meshes[block]->Position().x - 3.5 && z < meshes[block]->Position().z - 3.5) {
 				camera.setPosition(glm::vec3(meshes[block]->Position().x - 3.5, 0, meshes[block]->Position().z - 3.3));
 			}
-			this->kolizja = 0;
 }
 
 
@@ -126,7 +125,7 @@ void Game::updateKeyboardInput(){
 	}
 
 	//Camera
-	if (glfwGetKey(this->window, GLFW_KEY_W) == GLFW_PRESS && this->kolizja == 0)
+	if (glfwGetKey(this->window, GLFW_KEY_W) == GLFW_PRESS )
 	{
 		this->camera.move(this->dt, FORWARD);
 	}
@@ -181,9 +180,6 @@ void Game::render() {
 	glActiveTexture(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-	//Variables
-
-	//Static Variables
 
 
 Game::Game(
@@ -335,43 +331,13 @@ void Game::initMaterials(){
 	this->materials.push_back( new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f),0, 1));
 }
 
-GLuint walls[5][6] =
-{
-	//right
-	{0, 1, 2, 0, 2, 3},
-	
-	//back
-	{7, 6, 1, 7, 1, 0},
-
-	//left
-	{4, 5, 6, 4, 6, 7},
-
-	//up
-	{3, 2, 5, 3, 5, 4},
-
-	{1, 6, 5, 1, 5, 2}
-};
-
-Vertex wallVertices[] = {
-	//Position								//Color							//Texcoords					//Normals
-	glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-
-	glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f)
-};
-unsigned nrOfWallVertices = sizeof(wallVertices) / sizeof(Vertex);
 
 void Game::initMeshes(){
 
 	constexpr int ROOM_SIZE = 8.f;
 
-	for(int i=0;i<10;i++){
-		for (int j = 0; j < 10; j++) {
+	for(int i=0;i<20;i++){
+		for (int j = 0; j < 20; j++) {
 			std::vector<GLuint>indices;
 			for (int point = 0; point < 6; point++) {
 				if (maze.getWall(i, j, 'L')) {

@@ -12,7 +12,8 @@ class Game {
 public:
 	//Variables
 	Camera camera;
-		//Window
+	
+	//Window informations
 	GLFWwindow* window;
 	const int WINDOW_WIDTH;
 	const int WINDOW_HEIGHT;
@@ -69,9 +70,7 @@ public:
 	void setWindowShouldclose();
 
 	//Functions
-	MazeGenerator maze = MazeGenerator();
-	int kolizja = 0;
-	void collisionDetector();																																	//collision
+	void collisionDetector();																																	
 	void update();
 	void updateDt();
 	void updateMouseinput();
@@ -118,5 +117,42 @@ private:
 	void initUniforms();
 
 	void updateUniforms();
+
+	//maze generation 
+	MazeGenerator maze = MazeGenerator();
+
+	GLuint walls[5][6] =
+	{
+		//right
+		{0, 1, 2, 0, 2, 3},
+
+		//back
+		{7, 6, 1, 7, 1, 0},
+
+		//left
+		{4, 5, 6, 4, 6, 7},
+
+		//up
+		{3, 2, 5, 3, 5, 4},
+
+		//floor
+		{1, 6, 5, 1, 5, 2}
+	};
+
+	static constexpr unsigned nrOfWallVertices = 8;
+
+	Vertex wallVertices[nrOfWallVertices] = {
+		//Position								//Color							//Texcoords					//Normals
+		glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+
+		glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
+		glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f)
+	};
+
 };
 
