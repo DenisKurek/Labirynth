@@ -99,6 +99,10 @@ public:
 			break;
 		}
 	}
+	void setPosition(glm::vec3 pos)
+	{
+		this->position = pos;
+	}
 
 	void updateMouseInput(const float& dt, const double& offsetX, const double& offsetY)
 	{

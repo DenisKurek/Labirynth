@@ -36,44 +36,57 @@ void Game::collisionDetector() {
 			bool exL = this->maze.getWall(i, j, 'L'); // U R L D
 			bool exU = this->maze.getWall(i, j, 'U'); // U R L D
 			bool exD = this->maze.getWall(i, j, 'D'); // U R L D
-			std::cout << i << "  " << j << std::endl;
-			if ((z + 0.2) >= (meshes[block]->Position().z + 3.85)
-				&& (z + 0.2) <= (meshes[block]->Position().z + 4.15)
-				&& (x + 0.2) <= (meshes[block]->Position().x + 3.9)
-				&& (x + 0.2) >= (meshes[block]->Position().x - 3.9)
+			//std::cout << i << "  " << j << std::endl;
+			if ((z ) > (meshes[block]->Position().z + 3.5)
+				&& (z ) <= (meshes[block]->Position().z + 4.15)
 				&& exR
 				) {
+				camera.setPosition(glm::vec3(this->camera.getPosition().x, 0, meshes[block]->Position().z + 3.5f));
 				std::cout << "kolizja R" << exR << std::endl;
-				this->kolizja = 1;
+				//this->kolizja = 1;
+
 			}
-			else if ((z - 0.2) <= (meshes[block]->Position().z - 3.85)
-				&& (z - 0.2) >= (meshes[block]->Position().z - 4.15)
-				&& (x + 0.2) <= (meshes[block]->Position().x + 3.9)
-				&& (x + 0.2) >= (meshes[block]->Position().x - 3.9)
+			if ((z ) < (meshes[block]->Position().z - 3.5)
+				&& (z ) >= (meshes[block]->Position().z - 4.15)
 				&& exL
 				) {
+				camera.setPosition(glm::vec3(this->camera.getPosition().x, 0, meshes[block]->Position().z - 3.5f));
 				std::cout << "kolizja L" << exL << std::endl;
-				this->kolizja = 1;
+				//this->kolizja = 1;
 			}
-			else if ((x + 0.2) >= (meshes[block]->Position().x + 3.85)
-				&& (x + 0.2) <= (meshes[block]->Position().x + 4.15)
-				&& (z + 0.2) <= (meshes[block]->Position().z + 3.9)
-				&& (z + 0.2) >= (meshes[block]->Position().z - 3.9)
+			if ((x ) > (meshes[block]->Position().x + 3.5)
+				&& (x) <= (meshes[block]->Position().x + 4.15)
 				&& exU
 				) {
+				camera.setPosition(glm::vec3(meshes[block]->Position().x + 3.5f, 0, this->camera.getPosition().z));
 				std::cout << "kolizja U" << exU << std::endl;
-				this->kolizja = 1;
+				//this->kolizja = 1;
 			}
-			else if ((x - 0.2) <= (meshes[block]->Position().x - 3.85)
-				&& (x - 0.2) >= (meshes[block]->Position().x - 4.15)
-				&& (z + 0.2) <= (meshes[block]->Position().z + 3.9)
-				&& (z + 0.2) >= (meshes[block]->Position().z - 3.9)
+			if ((x ) < (meshes[block]->Position().x - 3.5)
+				&& (x ) >= (meshes[block]->Position().x - 4.15)
 				&& exD
 				) {
+				camera.setPosition(glm::vec3(meshes[block]->Position().x - 3.5f, 0, this->camera.getPosition().z));
 				std::cout << "kolizja B" << exD << std::endl;
-				this->kolizja = 1;
+				//this->kolizja = 1;
 			}
-			else this->kolizja = 0;
+			//prawy górny
+			if ( x > meshes[block]->Position().x + 3.5 && z > meshes[block]->Position().z + 3.5) {
+				camera.setPosition(glm::vec3(meshes[block]->Position().x + 3.5, 0, meshes[block]->Position().z + 3.3));
+			}
+			//prawy dolny
+			if ( x < meshes[block]->Position().x - 3.5 && z > meshes[block]->Position().z + 3.5) {
+				camera.setPosition(glm::vec3(meshes[block]->Position().x - 3.5, 0, meshes[block]->Position().z + 3.3));
+			}
+			//lewy górny
+			if ( x > meshes[block]->Position().x + 3.5 && z < meshes[block]->Position().z - 3.5) {
+				camera.setPosition(glm::vec3(meshes[block]->Position().x + 3.5, 0, meshes[block]->Position().z - 3.3));
+			}
+			//lewy dolny
+			if (x < meshes[block]->Position().x - 3.5 && z < meshes[block]->Position().z - 3.5) {
+				camera.setPosition(glm::vec3(meshes[block]->Position().x - 3.5, 0, meshes[block]->Position().z - 3.3));
+			}
+			this->kolizja = 0;
 }
 
 
