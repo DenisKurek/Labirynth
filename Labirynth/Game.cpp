@@ -28,7 +28,7 @@ void Game::update() {
 void Game::collisionDetector() {
 	float x = this->camera.getPosition().x;
 	float z = this->camera.getPosition().z;
-	int maze_size = 20;
+	int maze_size = maze.getSize();
 	int i = (-4 + this->camera.getPosition().x )/ -8;
 	int j = ( 4 + this->camera.getPosition().z )/  8;
 			int block = i * maze_size + j;
@@ -180,9 +180,6 @@ void Game::render() {
 	glActiveTexture(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-	//Variables
-
-	//Static Variables
 
 
 Game::Game(
@@ -334,36 +331,6 @@ void Game::initMaterials(){
 	this->materials.push_back( new Material(glm::vec3(0.1f), glm::vec3(1.f), glm::vec3(1.f),0, 1));
 }
 
-GLuint walls[5][6] =
-{
-	//right
-	{0, 1, 2, 0, 2, 3},
-	
-	//back
-	{7, 6, 1, 7, 1, 0},
-
-	//left
-	{4, 5, 6, 4, 6, 7},
-
-	//up
-	{3, 2, 5, 3, 5, 4},
-
-	{1, 6, 5, 1, 5, 2}
-};
-
-Vertex wallVertices[] = {
-	//Position								//Color							//Texcoords					//Normals
-	glm::vec3(-0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(-0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(0.5f, -0.5f, 0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(0.5f, 0.5f, 0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-
-	glm::vec3(0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 0.f, 0.f),		glm::vec2(0.f, 1.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 1.f, 0.f),		glm::vec2(0.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(-0.5f, -0.5f, -0.5f),			glm::vec3(0.f, 0.f, 1.f),		glm::vec2(1.f, 0.f),		glm::vec3(0.f, 0.f, 1.f),
-	glm::vec3(-0.5f, 0.5f, -0.5f),			glm::vec3(1.f, 1.f, 0.f),		glm::vec2(1.f, 1.f),		glm::vec3(0.f, 0.f, 1.f)
-};
-unsigned nrOfWallVertices = sizeof(wallVertices) / sizeof(Vertex);
 
 void Game::initMeshes(){
 

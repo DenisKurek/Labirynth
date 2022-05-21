@@ -12,6 +12,7 @@
 
 #include"Shader.h"
 
+//used to symulate light  behavior on textures
 class Material {
 public:
 Material(

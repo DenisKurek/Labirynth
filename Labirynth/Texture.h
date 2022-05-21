@@ -7,14 +7,18 @@
 
 #include<SOIL2.h>
 
+
+// represents textures
 class Texture {
 
 public:
+
 	Texture(const char* fileName, GLenum type);
 
 	~Texture();
 
 	GLuint getID() const ;
+
 
 	void loadFromFile(const char* fileName);
 

@@ -7,6 +7,9 @@
 #include"Shader.h"
 #include"Material.h"
 
+
+// connects meshes ,material and texture to create one model
+	
 class Model
 {
 private:

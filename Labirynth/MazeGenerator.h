@@ -6,9 +6,9 @@
 #include <time.h>
 #include <set>
 #include <algorithm>
-constexpr int BOARD_HEIGHT = 20;
-constexpr int BOARD_WIDTH = 20;
+constexpr int BOARD_SIZE = 20;
 
+// creates logical representation of maze size BOARD_HEIGHT BOARD_WIDTH
 class MazeGenerator {
 	class Cell {
 	private:
@@ -31,8 +31,10 @@ class MazeGenerator {
 		}
 	};
 
+	//generates maze
 	void dfs(int x, int y);
 
+	//draws maze in console
 	void draw();
 
 public:
@@ -41,7 +43,9 @@ public:
 		draw();
 	}
 
+	int getSize() { return BOARD_SIZE; }
+
 	bool getWall(int x, int y, char wall);
 
-	Matrix<Cell, BOARD_HEIGHT, BOARD_WIDTH> matrix;
+	Matrix<Cell, BOARD_SIZE, BOARD_SIZE> matrix;
 };

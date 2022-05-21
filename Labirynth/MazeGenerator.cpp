@@ -45,13 +45,13 @@ void MazeGenerator::dfs(int x, int y) {
 void MazeGenerator::draw() {
 	system("cls");
 	std::cout << (char)197;
-	for (int j = 0; j < BOARD_HEIGHT - 1; j++) {
+	for (int j = 0; j < BOARD_SIZE - 1; j++) {
 		std::cout << (char)196 << (char)197;
 	}
 	std::cout << (char)196 << (char)197 << std::endl;
-	for (int i = 0; i < BOARD_WIDTH; i++) {
+	for (int i = 0; i < BOARD_SIZE; i++) {
 		std::cout << (char)197;
-		for (int j = 0; j < BOARD_HEIGHT; j++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (this->matrix(i, j).right) {
 				std::cout << ' ' << (char)179;
 			}
@@ -60,7 +60,7 @@ void MazeGenerator::draw() {
 			}
 		}
 		std::cout << std::endl << (char)197;
-		for (int j = 0; j < BOARD_HEIGHT; j++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (this->matrix(i, j).down) {
 				std::cout << (char)196 << (char)197;
 			}
