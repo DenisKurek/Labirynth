@@ -6,7 +6,7 @@
 #include <time.h>
 #include <set>
 #include <algorithm>
-constexpr int BOARD_SIZE = 20;
+constexpr int BOARD_SIZE = 50;
 
 // creates logical representation of maze size BOARD_HEIGHT BOARD_WIDTH
 class MazeGenerator {
@@ -34,12 +34,19 @@ class MazeGenerator {
 	//generates maze
 	void dfs(int x, int y);
 
+	void kruskal();
+	int group[BOARD_SIZE * BOARD_SIZE + 1];
+	int find(int a);
+	void unite(int a,int b);
 	//draws maze in console
 	void draw();
 
+
+
 public:
 	MazeGenerator() {
-		dfs(0, 0);
+		//dfs(0, 0);
+		kruskal();
 		draw();
 	}
 
