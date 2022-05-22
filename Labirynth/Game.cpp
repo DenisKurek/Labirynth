@@ -336,8 +336,8 @@ void Game::initMeshes(){
 
 	constexpr int ROOM_SIZE = 8.f;
 
-	for(int i=0;i<20;i++){
-		for (int j = 0; j < 20; j++) {
+	for(int i=0;i<this->maze.getSize();i++){
+		for (int j = 0; j < maze.getSize(); j++) {
 			std::vector<GLuint>indices;
 			for (int point = 0; point < 6; point++) {
 				if (maze.getWall(i, j, 'L')) {

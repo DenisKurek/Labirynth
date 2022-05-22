@@ -42,6 +42,56 @@ void MazeGenerator::dfs(int x, int y) {
 	return;
 }
 
+int  MazeGenerator::find(int a) {
+	return group[a] = (group[a] == a ? a : find(group[a]));
+}
+void  MazeGenerator::unite(int a,int b) {
+	group[find(a)] = find(b);
+		return;
+}
+
+void MazeGenerator::kruskal(){
+	std::vector<std::pair<int, char>> connections;
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			if (i - 1 >= 0) {
+				connections.push_back(std::make_pair(i * BOARD_SIZE + j, 'U'));
+			}
+			if (j - 1 >= 0) {
+				connections.push_back(std::make_pair(i * BOARD_SIZE + j, 'L'));
+			}
+			group[i * BOARD_SIZE + j]= i * BOARD_SIZE + j;
+		}
+	}
+	std::random_shuffle(connections.begin(), connections.end());
+	for (int i = 0; i < connections.size(); i++) {
+		if (connections[i].second == 'U') {
+			int a = connections[i].first;
+			int b = a - BOARD_SIZE;
+			if (find(a) != find(b)) {
+				unite(a, b);
+				int x = a / BOARD_SIZE;
+				int y = a % BOARD_SIZE;
+				this->matrix(x, y).up = false;
+				this->matrix(x -1, y).down = false;
+
+			}
+		}
+		else {
+			int a = connections[i].first;
+			int b = a - 1;
+			if (find(a) != find(b)) {
+				unite(a, b);
+				int x = a / BOARD_SIZE;
+				int y = a % BOARD_SIZE;
+				this->matrix(x, y).left = false;
+				this->matrix(x, y-1).right = false;
+			}
+		}
+	}
+
+}
+
 void MazeGenerator::draw() {
 	system("cls");
 	std::cout << (char)197;
