@@ -15,10 +15,10 @@ uniform mat4 ViewMatrix;
 uniform mat4 ProjectionMatrix;
 
 void main() {
-	vs_position =vec4(ModelMatrix*vec4(vertex_position,1.f)).xyz; //xyz (take only 3 coordinates //sfizling)
+	vs_position = vec4(ModelMatrix * vec4(vertex_position, 1.f)).xyz; // Take only 3 coordinates, i.e. xyz (sfizling)
 	vs_color = vertex_color;
 	vs_texcoord = vec2(vertex_texcoord.x, vertex_texcoord.y * -1.f);
 	vs_normal = mat3(ModelMatrix) * vertex_normal;
 
-	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * vec4(vertex_position, 1.f); //not modify vs_position by ProjectionMatrix
+	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * vec4(vertex_position, 1.f); // Do not modify vs_position by ProjectionMatrix
 }

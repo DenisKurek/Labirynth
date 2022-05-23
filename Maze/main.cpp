@@ -1,11 +1,12 @@
-#include "Game.h"
+#include "Game.hpp"
 
 int main() {
 	srand(time(nullptr));
-	Game game("LABIRYNTH", 1600 , 800 , true);
-	//MAIN LOOP
+
+	Game game("MAZE", 1600, 800, true);
+
+	// Main game loop
 	while (!game.getWindowShouldClose()) {
-		//UPDATE INPUT
 		game.update();
 		game.render();
 	}

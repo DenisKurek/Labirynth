@@ -1,4 +1,4 @@
-#include"Material.h"
+#include "Material.hpp"
 
 Material::Material(
 	glm::vec3 ambient,
@@ -6,13 +6,8 @@ Material::Material(
 	glm::vec3 specular,
 	GLint diffuseTex,
 	GLint specularTex
-	) {
-		this->ambient = ambient;
-		this->diffuse = diffuse;
-		this->specular = specular;
-		this->diffuseTex = diffuseTex;
-		this->specularTex = specularTex;
-}
+) : ambient(ambient), diffuse(diffuse), specular(specular),
+	diffuseTex(diffuseTex), specularTex(specularTex) {}
 
 void Material::sendToShader(Shader& program) {
 	program.setVec3f(this->ambient, "material.ambient");
