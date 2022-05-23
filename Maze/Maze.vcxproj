@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{c874be81-9143-4c5b-9804-34e9c334be8c}</ProjectGuid>
-    <RootNamespace>Labirynth</RootNamespace>
+    <RootNamespace>Maze</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -152,22 +152,21 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="model.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="libs.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MazeGenerator.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Light.hpp" />
+    <ClInclude Include="Material.hpp" />
+    <ClInclude Include="MazeGenerator.hpp" />
+    <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Model.hpp" />
+    <ClInclude Include="Vertex.hpp" />
+    <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment_core.glsl" />
