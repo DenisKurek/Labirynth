@@ -3,7 +3,7 @@
 int main() {
 	srand(time(nullptr));
 
-	Game game("MAZE", 1600, 800, true);
+	Game game("Labirynth", 1600, 800, true);
 
 	// Main game loop
 	while (!game.getWindowShouldClose()) {

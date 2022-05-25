@@ -12,6 +12,9 @@ enum Direction {
 	RIGHT
 };
 
+/**
+ * Class that represents the camera.
+ */
 class Camera {
 private:
 	glm::mat4 ViewMatrix;

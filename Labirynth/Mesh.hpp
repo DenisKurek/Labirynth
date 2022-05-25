@@ -6,6 +6,9 @@
 #include <glew.h>
 #include <glm.hpp>
 
+/**
+ * Class responsible for generating and dealing with polygon meshes.
+ */
 class Mesh {
 private:
 	unsigned noOfVertices;
