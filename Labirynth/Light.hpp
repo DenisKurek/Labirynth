@@ -29,10 +29,10 @@ public:
 	Light(
 		glm::vec3 position,
 		glm::vec3 color = glm::vec3(1.f),
-		float intensity = 1.f,
+		float intensity = 5.f,
 		float constant = 5.f,
 		float linear = 5.f,
-		float quadratic = 0.4f
+		float quadratic = 0.9f
 	);
 
 	/**

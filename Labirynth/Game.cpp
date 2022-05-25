@@ -25,7 +25,7 @@ GLuint Game::walls[5][6] = {
 	{3, 2, 5, 3, 5, 4},
 
 	// Floor 8,9, 10,
-	{ 11,10,9,8,9, 10,}
+	{ 11,10,9,8,9, 10}
 };
 
 Vertex Game::wallVertices[WALL_VERTICES_NO] = {
