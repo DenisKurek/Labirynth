@@ -339,7 +339,7 @@ void Game::initMatrices() {
 }
 
 void Game::initShaders() {
-	this->shaders.push_back(new Shader("vertex_core.glsl", "fragment_core.glsl"));
+	this->shaders.push_back(new Shader("shaders/vertex_core.glsl", "shaders/fragment_core.glsl"));
 }
 
 void Game::initTextures() {

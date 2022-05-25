@@ -1,11 +1,11 @@
 #include "Shader.hpp"
 
-Shader::Shader(const char* vertexFile, const char* fragmentFile) {
+Shader::Shader(const char* vertexFilePath, const char* fragmentFilePath) {
 	GLuint vertexShader = 0;
 	GLuint fragmentShader = 0;
 
-	vertexShader = loadShader(GL_VERTEX_SHADER, vertexFile);
-	fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentFile);
+	vertexShader = loadShader(GL_VERTEX_SHADER, vertexFilePath);
+	fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentFilePath);
 
 	this->linkProgram(vertexShader, fragmentShader);
 
@@ -67,32 +67,32 @@ void Shader::setMat4fv(glm::mat4 value, const GLchar* name, GLboolean transpose)
 	this->unuse();
 }
 
-std::string Shader::readShaderSource(const char* fileName) {
+std::string Shader::readShaderSource(const char* filePath) {
 	std::ifstream inFile;
 	std::string src = "";
 	std::string line = "";
 
-	inFile.open(fileName);
+	inFile.open(filePath);
 
 	if (inFile.is_open()) {
 		while (std::getline(inFile, line)) {
 			src += line + '\n';
 		}
 	} else {
-		std::cerr << "ERROR::SHADER::COULD_NOT_OPEN_FILE " << fileName << '\n';
+		std::cerr << "ERROR::SHADER::COULD_NOT_OPEN_FILE " << filePath << '\n';
 	}
 	inFile.close();
 
 	return src;
 }
 
-GLuint Shader::loadShader(GLenum type, const char* fileName) {
+GLuint Shader::loadShader(GLenum type, const char* filePath) {
 	char infolog[512];
 	GLint success;
 
 	GLuint shader = glCreateShader(type);
 
-	std::string strSrc = this->readShaderSource(fileName);
+	std::string strSrc = this->readShaderSource(filePath);
 	const GLchar* src = strSrc.c_str();
 
 	glShaderSource(shader, 1, &src, NULL);
@@ -101,7 +101,7 @@ GLuint Shader::loadShader(GLenum type, const char* fileName) {
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(shader, 512, NULL, infolog);
-		std::cerr << "ERROR::SHADER::COULD_NOT_COMPILE_SHADER " << fileName << '\n';
+		std::cerr << "ERROR::SHADER::COULD_NOT_COMPILE_SHADER " << filePath << '\n';
 		std::cerr << infolog << '\n';
 	}
 

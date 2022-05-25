@@ -21,11 +21,11 @@ public:
 	 *
 	 * This process involves a few stages. The shader source codes are read from the files, then they are
 	 *     compiled, linked together, attached, and a complete shader program is created as a result.
-	 * @param vertexFile The name of the file that stores the vertex shader source code.
-	 * @param fragmentFile The name of the file that stores the fragment shader source code.
+	 * @param vertexFilePath A path to the file that stores the vertex shader source code.
+	 * @param fragmentFilePath A path to the file that stores the fragment shader source code.
 	 * @note On failure, prints more details to the standard error output.
 	 */
-	Shader(const char* vertexFile, const char* fragmentFile);
+	Shader(const char* vertexFilePath, const char* fragmentFilePath);
 
 	/**
 	 * The destructor that deletes the shader program that is no longer needed.
@@ -98,20 +98,20 @@ public:
 private:
 	/**
 	 * Reads a particular shader source code from the given file.
-	 * @param fileName The name of the file, from which the shader code is to be read.
+	 * @param filePath A file path from which the shader is to be loaded.
 	 * @return A standard string that contains the shader code that has been read.
 	 * @note On failure, prints more details to the standard error output.
 	 */
-	std::string readShaderSource(const char* fileName);
+	std::string readShaderSource(const char* filePath);
 
 	/**
 	 * Loads a particular shader, compiles it, and then returns the compilation results.
 	 * @param type A predefined type of the shader that is to be loaded.
-	 * @param fileName The name of the file that stores the shader source code.
+	 * @param filePath A file path from which the shader is to be loaded.
 	 * @return The compiled shader.
 	 * @note On failure, prints more details to the standard error output.
 	 */
-	GLuint loadShader(GLenum type, const char* fileName);
+	GLuint loadShader(GLenum type, const char* filePath);
 
 	/**
 	 * Creates a complete shader program by linking the provided sharders together and attaching them.
