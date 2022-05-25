@@ -4,6 +4,9 @@
 
 #include <glm.hpp>
 
+/**
+ * Class designed to create and represent light sources.
+ */
 class Light {
 private:
 	glm::vec3 position;

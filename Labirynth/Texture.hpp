@@ -6,7 +6,7 @@
 #include <iostream>
 
 /**
- * Class designed to be used to create various textures.
+ * Class designed to create and deal with textures.
  */
 class Texture {
 private:

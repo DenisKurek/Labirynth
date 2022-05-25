@@ -15,7 +15,7 @@ enum Wall {
 };
 
 /**
- * Class that, when instantiated, creates a logical representation of a maze.
+ * Class responsible for the generation of the maze.
  */
 class MazeGenerator {
 private:
@@ -84,10 +84,22 @@ private:
 	 */
 	void dfs(int x, int y);
 
+	/**
+	 * Kruskal's algorithm that generates a maze with random corridors.
+	 */
 	void kruskal();
 
+	/**
+	 * Checks, which group the given room belongs to.
+	 * @param a A room ID.
+	 */
 	int find(int a);
 
+	/**
+	 * Joins together two groups of rooms.
+	 * @param a An ID of the first groop.
+	 * @param b An ID of the second groop.
+	 */
 	void unite(int a, int b);
 
 	/**

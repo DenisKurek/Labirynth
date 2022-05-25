@@ -8,6 +8,9 @@
 #include <fstream>
 #include <string>
 
+/**
+ * Class designed to load and set up shaders.
+ */
 class Shader {
 private:
 	GLuint id;

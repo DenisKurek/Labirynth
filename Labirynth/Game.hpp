@@ -20,7 +20,7 @@ enum ShaderEnum;
 enum TextureEnum;
 
 /**
- * The main class of the entire game.
+ * Class that contains the main game logic.
  */
 class Game {
 private:
