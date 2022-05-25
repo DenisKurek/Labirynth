@@ -59,7 +59,7 @@ void main() {
 	vec3 ambientFinal = calculateAmbient(material);
 
 	// Diffuse light
-	vec3 diffuseFinal = calculateDiffuse(material, vs_position, vs_normal, light.position);
+	//vec3 diffuseFinal = calculateDiffuse(material, vs_position, vs_normal, light.position); BUGGED
 
 	// Specular light
 	vec3 specularFinal = calculateSpecular(material, vs_position, vs_normal, light.position, cameraPos);
@@ -71,9 +71,9 @@ void main() {
 
 	// Final lighting
 	ambientFinal *= attenuation;
-	diffuseFinal *= attenuation;
+	//diffuseFinal *= attenuation;
 	specularFinal *= attenuation;
 
 	fs_color = texture(material.diffuseTex, vs_texcoord) * (vec4(ambientFinal, 1.f)
-		+ vec4(diffuseFinal, 1.f) + vec4(specularFinal, 1.f));
+    + vec4(specularFinal, 1.f));
 }

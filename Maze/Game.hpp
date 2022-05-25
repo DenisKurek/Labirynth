@@ -27,7 +27,7 @@ private:
 	static constexpr int GL_VERSION_MAJOR = 4;
 	static constexpr int GL_VERSION_MAINOR = 4;
 
-	static constexpr unsigned WALL_VERTICES_NO = 8;
+	static constexpr unsigned WALL_VERTICES_NO = 12;
 
 	const int WINDOW_WIDTH;
 	const int WINDOW_HEIGHT;

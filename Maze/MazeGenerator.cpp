@@ -1,7 +1,7 @@
 #include "MazeGenerator.hpp"
 
 MazeGenerator::MazeGenerator() {
-	//dfs(0, 0);
+	//dfs(10, 10);
 	kruskal();
 	draw();
 }

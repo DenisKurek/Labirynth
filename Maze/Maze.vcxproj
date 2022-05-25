@@ -169,6 +169,7 @@
     <ClInclude Include="Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="fragment_core.glsl" />
     <None Include="vertex_core.glsl" />
   </ItemGroup>

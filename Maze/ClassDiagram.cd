@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Game">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AgIUBQAAC2ABUEACBAiwUmAAjA6kBhAaAISACARcABE=</HashCode>
+      <FileName>Game.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Camera">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAEAVAAAACAAAAAIAAiAAIAAFAoAAAAAgAAgBA=</HashCode>
+      <FileName>Camera.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Light">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAIgACAAAACADAAAAIACAAAAA=</HashCode>
+      <FileName>Light.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Material">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAAAAAAAAAAAAAAAAAAAAIAAAAgAABACAAAAABAAAA=</HashCode>
+      <FileName>Material.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MazeGenerator">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="MazeGenerator::Cell" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MazeGenerator.hpp</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="MazeGenerator::Matrix&lt;T, rows, cols&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MazeGenerator.hpp</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIAAAAEAAAYAACAAAAAABAAgCAAAAAQAAAA=</HashCode>
+      <FileName>MazeGenerator.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mesh">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iIAAIgAAAAkAAACAAACQIAACCAAAIAACAQEAAgAUgCA=</HashCode>
+      <FileName>Mesh.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAIAAAIAAAAAAAAAACAAgAAABQAAQ=</HashCode>
+      <FileName>Model.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shader">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAACAAAAAAAAAAAIABAAAAAAAEABADgAACAAIBgA=</HashCode>
+      <FileName>Shader.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAIAAgASAQAAAAAAAACABAAAAAAIQAAAABgA=</HashCode>
+      <FileName>Texture.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
